@@ -1,25 +1,27 @@
-// Initialize Lenis for smooth scrolling (via CDN global)
+// Initialize Lenis for smooth scrolling (via CDN global) ONLY ON DESKTOP
 let lenis = null;
-try {
-  lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
-    direction: 'vertical',
-    gestureDirection: 'vertical',
-    smooth: true,
-    mouseMultiplier: 1,
-    smoothTouch: false,
-    touchMultiplier: 2,
-    infinite: false,
-  });
+if (window.innerWidth > 768) {
+  try {
+    lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // https://www.desmos.com/calculator/brs54l4xou
+      direction: 'vertical',
+      gestureDirection: 'vertical',
+      smooth: true,
+      mouseMultiplier: 1,
+      smoothTouch: false,
+      touchMultiplier: 2,
+      infinite: false,
+    });
 
-  function raf(time) {
-    lenis.raf(time);
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
     requestAnimationFrame(raf);
+  } catch (e) {
+    console.warn("Lenis failed to initialize. Smooth scrolling disabled.", e);
   }
-  requestAnimationFrame(raf);
-} catch (e) {
-  console.warn("Lenis failed to initialize. Smooth scrolling disabled.", e);
 }
 
 // Custom Cursor Logic

@@ -11,6 +11,7 @@ html, body {
   padding: 0;
   width: 100%;
   overflow-x: hidden;
+  scroll-behavior: smooth; /* Native smooth scroll for mobile anchor links */
   background-color: #fcfbf8; /* Warm Washi Paper Tone */
   color: var(--text-dark);
   font-family: var(--font-serif);
