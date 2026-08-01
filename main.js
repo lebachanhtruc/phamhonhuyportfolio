@@ -92,53 +92,7 @@ if (document.readyState === 'complete') {
 // Fallback just in case load event gets swallowed or hangs
 setTimeout(() => document.body.classList.add('loaded'), 2500);
 
-// 2. Zen Audio Logic (Synthetic Koto)
-let audioCtx = null;
-let zenAudioEnabled = false;
-
-window.toggleAudio = function() {
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  if (audioCtx.state === 'suspended') audioCtx.resume();
-  zenAudioEnabled = !zenAudioEnabled;
-  const btn = document.getElementById('zen-audio-btn');
-  if(btn) {
-    btn.textContent = zenAudioEnabled ? "🔊 ZEN" : "🔇 ZEN";
-    btn.classList.toggle('active', zenAudioEnabled);
-  }
-  if (zenAudioEnabled) {
-    playKotoPluck(600); // Play an initial sound so the user knows it's working
-  }
-}
-
-function playKotoPluck(baseFreq = 440) {
-  if (!zenAudioEnabled || !audioCtx) return;
-  const osc = audioCtx.createOscillator();
-  const gainNode = audioCtx.createGain();
-  
-  osc.type = 'sine';
-  osc.frequency.setValueAtTime(baseFreq + Math.random()*20, audioCtx.currentTime); // Slight randomization
-  osc.frequency.exponentialRampToValueAtTime(baseFreq/2, audioCtx.currentTime + 0.5);
-  
-  gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
-  gainNode.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.01);
-  gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.5);
-  
-  osc.connect(gainNode);
-  gainNode.connect(audioCtx.destination);
-  osc.start();
-  osc.stop(audioCtx.currentTime + 1.5);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  // Attach sounds to interactable elements
-  document.querySelectorAll('.item_photo, .nav-item, .lang-btn, .exp-item').forEach(el => {
-    el.addEventListener('mouseenter', playKotoPluck);
-  });
-});
-
-// 3. Parallax effect, Red Thread Scrollbar, and Scroll Audio
-let lastPluckTime = 0;
-
+// 2. Parallax effect, Red Thread Scrollbar
 window.addEventListener('scroll', () => {
   const scrollTop = window.scrollY || document.documentElement.scrollTop;
   const docHeight = document.body.scrollHeight - window.innerHeight;
@@ -148,16 +102,6 @@ window.addEventListener('scroll', () => {
   const thread = document.getElementById('red-thread');
   if(thread) {
     thread.style.height = `${progress * 100}%`;
-  }
-
-  // Audio on scroll (Throttled)
-  if (zenAudioEnabled) {
-    const now = Date.now();
-    if (now - lastPluckTime > 500) {
-      // Vary pitch slightly based on scroll depth
-      playKotoPluck(300 + (1 - progress) * 300);
-      lastPluckTime = now;
-    }
   }
 }, { passive: true });
 
