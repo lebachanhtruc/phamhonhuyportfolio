@@ -255,25 +255,27 @@ window.setLanguage = function(lang) {
 }
 
 // Mobile Hamburger Menu Logic
-window.toggleMobileMenu = function() {
-  const navRight = document.querySelector('.nav-right');
-  const hamburger = document.querySelector('.hamburger');
-  if (navRight && hamburger) {
-    navRight.classList.toggle('active');
-    hamburger.classList.toggle('active');
-  }
-}
-
-// Close menu when clicking a nav link
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.nav-right .nav-item').forEach(link => {
-    link.addEventListener('click', () => {
-      const navRight = document.querySelector('.nav-right');
-      const hamburger = document.querySelector('.hamburger');
-      if (navRight && navRight.classList.contains('active')) {
-        navRight.classList.remove('active');
-        hamburger.classList.remove('active');
-      }
+  const hamburger = document.querySelector('.hamburger');
+  const navRight = document.querySelector('.nav-right');
+  
+  if (hamburger && navRight) {
+    // Toggle menu
+    hamburger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      navRight.classList.toggle('active');
+      hamburger.classList.toggle('active');
     });
-  });
+
+    // Close menu when clicking a nav link
+    document.querySelectorAll('.nav-right .nav-item').forEach(link => {
+      link.addEventListener('click', () => {
+        if (navRight.classList.contains('active')) {
+          navRight.classList.remove('active');
+          hamburger.classList.remove('active');
+        }
+      });
+    });
+  }
 });
