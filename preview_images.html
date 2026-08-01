@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+  body { background: #111; color: #fff; font-family: sans-serif; padding: 20px; }
+  .grid { display: flex; flex-wrap: wrap; gap: 20px; }
+  .card { border: 1px solid #444; padding: 10px; text-align: center; background: #222; }
+  img { max-width: 300px; max-height: 300px; object-fit: contain; }
+  p { font-size: 14px; margin-top: 10px; font-weight: bold; }
+</style>
+</head>
+<body>
+  <h2>Thư viện Ảnh (Image Preview)</h2>
+  <div class="grid" id="grid"></div>
+  <script>
+    const files = [
+      "IMG_3183.jpeg", "IMG_3187.jpeg", "IMG_3664.jpeg", "IMG_3673.jpeg", "IMG_3690.jpeg", 
+      "IMG_3699.jpeg_4K_202608011236.jpeg", "IMG_3713.jpeg", "IMG_3715.jpeg", "IMG_3716.jpeg", 
+      "IMG_3720.jpeg", "IMG_3735.jpeg", "IMG_6558.jpg", "IMG_7136.jpeg", "IMG_7302.jpeg", 
+      "IMG_7388.jpeg", "IMG_7566.jpeg", "IMG_7570.jpeg", "IMG_7683.jpeg", "IMG_7723.jpeg", 
+      "IMG_8354.jpeg", "IMG_9726.JPG", "IMG_9727.JPG", "IMG_9728.JPG", "IMG_3162.jpeg"
+    ];
+    const grid = document.getElementById('grid');
+    files.forEach(f => {
+      grid.innerHTML += `<div class="card"><img src="assets/${f}" alt="${f}" loading="lazy"><p>${f}</p></div>`;
+    });
+  </script>
+</body>
+</html>

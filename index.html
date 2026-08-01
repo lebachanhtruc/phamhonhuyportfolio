@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eve Pham - Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500&family=Noto+Serif+JP:wght@200;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./style.css?v=16">
+  </head>
+  <body>
+    <!-- Noren Loader -->
+    <div id="noren-loader">
+      <div class="noren-left"></div>
+      <div class="noren-right"></div>
+    </div>
+    <script>
+      // Foolproof loader dismissal
+      window.addEventListener('load', () => setTimeout(() => document.body.classList.add('loaded'), 300));
+      setTimeout(() => document.body.classList.add('loaded'), 2000); // 2s absolute fallback
+    </script>
+    
+    <!-- Red Thread Scrollbar -->
+    <div id="red-thread"></div>
+    
+    <!-- Zen Audio Toggle -->
+    <button id="zen-audio-btn" class="lang-btn" style="position:fixed; bottom: 30px; right: 30px; z-index: 10000; box-shadow: 0 4px 12px rgba(0,0,0,0.1);" onclick="toggleAudio()">🔇 ZEN</button>
+
+    <nav class="navbar">
+      <div class="nav-left">
+        <a href="#home" class="nav-item nav-logo">EVE PHAM</a>
+      </div>
+      <div class="hamburger" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <div class="nav-right">
+        <a href="#about" class="nav-item" data-i18n="nav_about">PROFILE</a>
+        <a href="#experience" class="nav-item" data-i18n="nav_experience">EXPERIENCE</a>
+        <a href="#education" class="nav-item" data-i18n="nav_education">EDUCATION</a>
+        <div class="lang-switcher">
+          <button id="btn-en" class="lang-btn active" onclick="setLanguage('en')">EN</button>
+          <button id="btn-fr" class="lang-btn" onclick="setLanguage('fr')">FR</button>
+          <button id="btn-ja" class="lang-btn" onclick="setLanguage('ja')">JP</button>
+        </div>
+      </div>
+    </nav>
+
+    <main data-scroll-container>
+      <!-- SPRINT 1: Hero Section -->
+      <section class="hero" id="home">
+        <div class="hero-bg-wrapper">
+          <div class="hero-bg" style="background-image: url('./assets/IMG_3162.jpeg');"></div>
+        </div>
+        <div class="hero-calligraphy">一期一会</div>
+        <div class="hero-title-container">
+          <h1 class="hero-title" data-i18n="hero_title">EVE PHAM</h1>
+          <p class="hero-subtitle" data-i18n="hero_subtitle">vol.1</p>
+          <div class="hanko-stamp hero-hanko">イ</div>
+        </div>
+      </section>
+
+      <!-- SPRINT 2: Golden Ratio Layout -->
+      <div class="content-container">
+        
+        <!-- Profile (Odd Row: Text Left, Photo Right) -->
+        <section class="item" id="about">
+          <div class="item_text">
+            <h2 class="section-title"><span data-i18n="about_title">PROFILE</span><span class="ja-title">プロフィール</span></h2>
+            <div class="desc" style="position: relative;">
+              <h3 style="font-size: 1.5rem; margin-bottom: 5px; font-weight: 600;" data-i18n="about_name">Ho Nhu Y Pham (Eve)</h3>
+              <p style="font-size: 0.9rem; opacity: 0.7; margin-bottom: 20px; font-style: italic;" data-i18n="about_info">Longueuil, QC | (438) 835-8686 | phamhonhuy@gmail.com</p>
+              
+              <p data-i18n="about_p1">Motivated and highly adaptable professional with a diverse background in office administration, customer service, and language education.</p>
+              <p data-i18n="about_p2">Multilingual (Vietnamese, Japanese, English, French) with a JLPT N1 certification. Proven ability to thrive in fast-paced environments, deliver excellent client service, and manage administrative tasks efficiently.</p>
+              <p data-i18n="about_p3">Eager to re-enter the workforce and contribute strong communication, organizational, and cross-cultural skills to a dynamic organization.</p>
+              <div class="hanko-stamp profile-hanko">イ</div>
+            </div>
+          </div>
+          <div class="item_photo">
+            <div class="photo-reveal">
+              <img src="./assets/profile_new.jpg?v=2" alt="Profile Main">
+            </div>
+          </div>
+        </section>
+
+        <!-- Experience (Even Row: Photo Left, Text Right) -->
+        <section class="item item_reverse" id="experience">
+          <div class="floating-haiku">千里の道も一歩から</div>
+          <div class="item_text">
+            <h2 class="section-title"><span data-i18n="exp_title">EXPERIENCE</span><span class="ja-title">職歴</span></h2>
+            <div class="desc">
+              <div class="exp-item">
+                <h3 class="exp-date" data-i18n="job1_date">Oct 2021 – Sept 2023</h3>
+                <h4 class="exp-title" data-i18n="job1_title">Office Administrator | LXR&Co</h4>
+                <p data-i18n="job1_desc">Managed daily office operations, provided administrative support to staff, and ensured a smooth workflow. Organized files, handled data entry, and maintained accurate records. Assisted with internal communications and customer inquiries, demonstrating adaptability in a Canadian professional environment.</p>
+                <div class="hanko-ender">イ</div>
+              </div>
+              <div class="exp-item">
+                <h3 class="exp-date" data-i18n="job2_date">Jun 2022 – Aug 2024</h3>
+                <h4 class="exp-title" data-i18n="job2_title">Server / Customer Service</h4>
+                <p style="font-size: 0.85rem; opacity: 0.8; margin-bottom: 5px;" data-i18n="job2_sub">Lime Griffintown (7/2023-8/2024) & Shushu Bar à Poke (6/2022-9/2022)</p>
+                <p data-i18n="job2_desc">Delivered high-quality customer service in a fast-paced and multicultural dining environment. Communicated effectively utilizing English and basic French. Managed orders, handled transactions, and ensured a positive dining experience.</p>
+                <div class="hanko-ender">イ</div>
+              </div>
+              <div class="exp-item">
+                <h3 class="exp-date" data-i18n="job3_date">Sept 2022 – Dec 2022</h3>
+                <h4 class="exp-title" data-i18n="job3_title">Kitchen Staff - Makiman | Sushi Ville Lajeunesse Montreal</h4>
+                <div class="hanko-ender">イ</div>
+              </div>
+              <div class="exp-item featured-jp">
+                <span class="featured-badge" data-i18n="badge_featured">FEATURED EXPERIENCE</span>
+                <h3 class="exp-date" data-i18n="job4_date">2015-2016 / 2017 – Aug 2021</h3>
+                <h4 class="exp-title" data-i18n="job4_title">Japanese Language Teacher | Sakura Japanese Center - Ho Chi Minh City</h4>
+                <p data-i18n="job4_desc">Taught Japanese language and culture to diverse groups of students, from beginner to advanced levels. Developed comprehensive lesson plans, prepared teaching materials, and evaluated student progress. Fostered an engaging and supportive learning environment to help students achieve their language goals.</p>
+                <div class="hanko-ender">イ</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Education & Skills -->
+        <section class="item" id="education">
+          <div class="floating-haiku haiku-left">継続は力なり</div>
+          <div class="item_text">
+            <h2 class="section-title"><span data-i18n="edu_title">EDUCATION</span><span class="ja-title">学歴</span></h2>
+            <div class="desc">
+              <div class="exp-item highlight-jp">
+                <h4 class="exp-title" style="margin-bottom: 5px;" data-i18n="edu_sub1">Education & Certifications</h4>
+                <ul style="padding-left: 20px; font-size: 0.95rem; margin-bottom: 20px; list-style-type: square;">
+                  <li data-i18n="edu_1">JLPT N1 Certification (Japanese Language Proficiency Test)</li>
+                  <li data-i18n="edu_2">Bachelor’s Degree in Japanese Language | HCMC University of Education, Vietnam</li>
+                  <li data-i18n="edu_3">Japanese Study Abroad Program (1 Year) | ISeifu Institute of Information Technology, Osaka, Japan</li>
+                </ul>
+                <div class="hanko-ender">イ</div>
+              </div>
+              <div class="exp-item">
+                <h4 class="exp-title" style="margin-bottom: 5px;" data-i18n="edu_sub2">Languages & Soft Skills</h4>
+                <ul style="padding-left: 20px; font-size: 0.95rem; list-style-type: square;">
+                  <li data-i18n="skill_lang">Languages: Vietnamese (Native), Japanese (Fluent/N1), English (Intermediate), French (Beginner)</li>
+                  <li data-i18n="skill_soft">Soft Skills: Customer Service, Cross-cultural Communication, Office Administration, Organization, Adaptability, Teaching & Mentoring</li>
+                </ul>
+                <div class="hanko-ender">イ</div>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+      </div>
+    </main>
+
+    <script src="https://unpkg.com/lenis@1.1.5/dist/lenis.min.js"></script>
+    <script src="./main.js?v=13"></script>
+    <script>
+      // Automatically switch to English on load
+      document.addEventListener("DOMContentLoaded", () => {
+        setLanguage('en');
+      });
+
+      // SPRINT 3: Intersection Observer for Sliding Door effect
+      document.addEventListener("DOMContentLoaded", () => {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+            }
+          });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('.item').forEach(el => observer.observe(el));
+
+        // SPRINT 4: Navbar scroll effect for readability
+        const nav = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+          if (window.scrollY > window.innerHeight - 80) {
+            nav.classList.add('scrolled');
+          } else {
+            nav.classList.remove('scrolled');
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

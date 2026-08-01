@@ -1,0 +1,723 @@
+:root {
+  --font-serif: "Cormorant Garamond", "Noto Serif JP", "Yu Mincho", YuMincho, "Hiragino Mincho ProN", serif;
+  --text-dark: #333333;
+  --text-light: #ffffff;
+  --bg-color: #ffffff;
+  --accent: #d2d2d2;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;
+  background-color: #fcfbf8; /* Warm Washi Paper Tone */
+  color: var(--text-dark);
+  font-family: var(--font-serif);
+  font-size: 17px; /* Reduced from 22px to prevent aggressive wrapping */
+  line-height: 2;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Typography Basics */
+h1, h2, h3, h4, h5, p {
+  margin: 0;
+  font-weight: normal;
+}
+
+/* Navbar */
+.navbar {
+  position: fixed;
+  top: 0; left: 0; width: 100%;
+  padding: 30px 5vw;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 100;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+.navbar.scrolled {
+  background-color: rgba(255, 255, 255, 0.95);
+  color: var(--text-dark);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+.nav-item {
+  text-decoration: none;
+  color: inherit;
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+  margin-right: 30px;
+}
+.nav-right { display: flex; align-items: center; }
+
+/* Hamburger Menu (Hidden on Desktop) */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 25px;
+  height: 18px;
+  cursor: pointer;
+  z-index: 101;
+}
+.hamburger span {
+  width: 100%;
+  height: 1px;
+  background-color: var(--text-dark);
+  transition: all 0.3s ease;
+}
+
+.lang-btn {
+  background: none;
+  border: none;
+  color: inherit;
+  font-family: var(--font-serif);
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+.lang-btn.active, .lang-btn:hover { opacity: 1; }
+
+/* SPRINT 1: Hero Section */
+.hero {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #000;
+}
+.hero-bg-wrapper {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+}
+.hero-bg {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: top center;
+  /* Sprint 1: Slow Zoom Effect */
+  transform: scale(1);
+  transition: transform 15s linear;
+}
+/* Scrim for navbar readability on busy images */
+.hero-bg-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 20%;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, transparent 100%);
+  z-index: 2;
+}
+.hero-bg-wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(0,0,0,0.3); /* Subtle darkening for text legibility */
+  z-index: 1;
+}
+/* Trigger zoom on load (using JS or just animation) */
+@keyframes slowZoom {
+  to { transform: scale(1.15); }
+}
+.hero-bg {
+  animation: slowZoom 15s linear forwards;
+}
+
+.hero-title-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  color: var(--text-light);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hero-title {
+  font-size: clamp(2rem, 8vh, 4rem); /* Responsive vertical text size to prevent cutoff */
+  letter-spacing: 0.2em;
+  /* Vertical text for elegant Japanese aesthetic */
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  margin-bottom: 20px;
+}
+.hero-subtitle {
+  font-size: 1rem;
+  letter-spacing: 0.1em;
+}
+
+
+/* SPRINT 2: Golden Ratio Layout */
+.content-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.item {
+  width: 100%;
+  padding: 80px 0;
+  display: flex;
+  align-items: center; /* Vertically center content */
+  justify-content: space-between;
+  position: relative;
+}
+#about {
+  /* Let it flow naturally to reduce negative space */
+}
+
+.item.item_reverse {
+  flex-direction: row-reverse; /* Flips the layout elegantly */
+}
+
+.item_photo {
+  width: 32%; /* Optimized for portrait images so they don't get too tall */
+  max-width: 450px;
+  position: relative;
+}
+
+.item_text {
+  width: 68%; /* Gives text more breathing room to balance the layout */
+  box-sizing: border-box;
+  padding: 0 8%;
+  display: flex;
+  position: relative;
+  z-index: 10;
+}
+
+/* Typography-focused layouts for sections without images */
+#experience .item_text, #education .item_text {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Odd Rows: Text on Left, Photo on Right, Cloth pushes slightly Left */
+.item .item_text { justify-content: center; }
+.item .item_photo_cloth { left: -5%; }
+
+/* Even Rows: Text on Right, Photo on Left, Cloth pushes slightly Right */
+.item.item_reverse .item_text { justify-content: center; }
+.item.item_reverse .item_photo_cloth { right: -5%; left: auto; }
+
+/* Specific Override for Gallery to avoid covering the subject's face */
+#gallery .item_photo_cloth {
+  right: auto;
+  left: -10%;
+  top: 35%;
+}
+
+/* Text Styling */
+.section-title {
+  writing-mode: vertical-rl;
+  font-size: 1.6rem;
+  letter-spacing: 0.1em;
+  color: var(--text-dark);
+  margin-right: 40px;
+  
+  /* Traditional Red Accent Line */
+  border-right: 2px solid #c0392b;
+  padding-right: 20px;
+}
+.desc {
+  padding-top: 10px;
+  flex: 1; /* Take remaining space */
+}
+.ja-title {
+  font-size: 1.2rem;
+  color: #c0392b;
+  margin-top: 30px;
+  opacity: 0.8;
+  font-weight: 400;
+  font-family: 'Noto Serif JP', serif;
+}
+.highlight-jp {
+  border-left: 3px solid #c0392b;
+  background: linear-gradient(to right, rgba(192, 57, 43, 0.05) 0%, transparent 100%);
+  padding: 15px 20px;
+  margin: 15px 0;
+  border-radius: 0 5px 5px 0;
+}
+.highlight-jp .exp-title, .highlight-jp strong {
+  color: #c0392b;
+}
+
+/* Featured Experience Highlight (Job 4) */
+.exp-item.featured-jp {
+  border-left: 4px solid #c0392b;
+  background: linear-gradient(135deg, rgba(192, 57, 43, 0.08) 0%, rgba(192, 57, 43, 0.01) 100%);
+  padding: 25px;
+  margin: 15px 0 30px -25px;
+  border-radius: 0 8px 8px 0;
+  box-shadow: 5px 5px 20px rgba(0,0,0,0.03);
+  position: relative;
+}
+.featured-badge {
+  display: inline-block;
+  background-color: #c0392b;
+  color: #fff;
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.exp-item.featured-jp .exp-title {
+  font-size: 1.3rem;
+  color: #c0392b;
+}
+.exp-item.featured-jp .exp-date {
+  color: #c0392b;
+  opacity: 0.9;
+}
+.desc p { margin-bottom: 20px; }
+
+.exp-item { margin-bottom: 30px; }
+.exp-date { font-size: 0.9rem; opacity: 0.7; margin-bottom: 5px; font-style: italic; }
+.exp-title { font-size: 1.2rem; margin-bottom: 10px; font-weight: 600; }
+
+/* Images */
+.photo-reveal {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  z-index: 2; /* Ensure image stays above background decorations like the Enso circle */
+}
+.photo-reveal img {
+  width: 100%;
+  display: block;
+}
+
+/* SPRINT 2: Floating Fabric Swatches (Overlays) */
+.item_photo_cloth {
+  position: absolute;
+  top: 15%;
+  width: 38.2%;
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
+}
+.item_photo_cloth img {
+  width: 100%;
+  display: block;
+}
+
+/* SPRINT 3: Sliding Door & Fade Animations */
+.photo-reveal::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: var(--bg-color); /* Matches page background */
+  z-index: 10;
+  transition: left 0.9s cubic-bezier(0.95, -0.02, 0.42, 1);
+}
+.item.visible .photo-reveal::after {
+  left: 100%;
+}
+
+.item_text {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease 0.5s, transform 0.8s ease 0.5s;
+}
+.item.visible .item_text {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.item_photo_cloth {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease 0.8s, transform 0.8s ease 0.8s;
+}
+.item.visible .item_photo_cloth {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hanko Stamp */
+.hanko-stamp {
+  width: 45px;
+  height: 70px;
+  border: 3px solid #c0392b;
+  border-radius: 8px; /* Slightly rounded for authenticity */
+  color: #c0392b;
+  font-family: var(--font-serif);
+  font-size: 28px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  opacity: 0.85; /* Make it look stamped */
+  transform: rotate(-8deg); /* Natural imperfect stamp angle */
+  position: absolute;
+  pointer-events: none;
+}
+.hero-hanko {
+  bottom: 0px;
+  right: -50px;
+  border-color: #ff4d4d; /* Brighter for dark hero background */
+  color: #ff4d4d;
+}
+.profile-hanko {
+  bottom: 0;
+  right: 0;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  mix-blend-mode: multiply; /* Ink blending on white background */
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .item {
+    flex-direction: column !important; /* Stack on mobile */
+    padding: 50px 0;
+  }
+  .item_photo, .item_text {
+    width: 100%;
+    padding: 0 20px !important;
+  }
+  .section-title {
+    padding: 40px 20px;
+    justify-content: center !important;
+  }
+  .item_photo_cloth {
+    width: 50%;
+    top: -20px;
+    left: 20px !important;
+    right: auto !important;
+  }
+  .section-title {
+    font-size: 1.5rem;
+  }
+  .desc { max-width: 100%; }
+}
+
+/* --- JAPANESE ATMOSPHERIC EFFECTS --- */
+
+/* 1. Noren Loader */
+#noren-loader {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: 9999;
+  display: flex;
+  pointer-events: none;
+}
+.noren-left, .noren-right {
+  width: 50%; height: 100%;
+  background-color: #fdfaf6;
+  border-right: 1px solid rgba(0,0,0,0.05);
+  transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+}
+.noren-right { border-right: none; border-left: 1px solid rgba(0,0,0,0.05); }
+body.loaded .noren-left { transform: translateX(-100%); }
+body.loaded .noren-right { transform: translateX(100%); }
+
+/* 2. Red Thread Scrollbar */
+::-webkit-scrollbar { width: 0px; background: transparent; } /* Hide default scrollbar */
+#red-thread {
+  position: fixed;
+  top: 0; right: 0;
+  width: 2px;
+  background-color: #c0392b;
+  height: 0%;
+  z-index: 9998;
+  box-shadow: 0 0 10px rgba(192,57,43,0.5);
+  transition: height 0.1s ease-out;
+}
+
+/* 3. Hero Calligraphy (Ichi-go Ichi-e) */
+.hero-calligraphy {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 15vw;
+  font-family: 'Noto Serif JP', serif;
+  color: rgba(255,255,255,0.08); /* Very faint white on dark bg */
+  writing-mode: vertical-rl;
+  z-index: 1;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  text-shadow: 0 0 30px rgba(255,255,255,0.2);
+}
+
+/* SPRINT 6: Japanese Wabi-Sabi Aesthetics */
+
+/* 1. Zen Enso Circle behind Profile Photo */
+.enso-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 130%;
+  height: 110%;
+  border: 5px solid rgba(192, 57, 43, 0.4); /* Thicker and more visible Bordeaux red fade */
+  border-radius: 45% 55% 40% 60% / 55% 45% 60% 40%; /* Organic brush stroke shape */
+  z-index: 1; /* Positive z-index to avoid hiding behind body background */
+  pointer-events: none;
+  animation: ensoMorph 8s ease-in-out infinite alternate;
+}
+@keyframes ensoMorph {
+  0% { border-radius: 45% 55% 40% 60% / 55% 45% 60% 40%; transform: translate(-50%, -50%) rotate(0deg); }
+  100% { border-radius: 55% 45% 60% 40% / 45% 55% 40% 60%; transform: translate(-50%, -50%) rotate(15deg); }
+}
+
+/* 2. Floating Haiku Texts */
+.floating-haiku {
+  position: absolute;
+  bottom: -40px; /* Position it at the bottom to bridge the gap between sections */
+  right: 5%;
+  writing-mode: vertical-rl;
+  font-family: 'Noto Serif JP', serif;
+  font-size: 4rem; /* Make it even larger */
+  color: rgba(0, 0, 0, 0.05); /* Very subtle */
+  letter-spacing: 0.5em;
+  z-index: 1; /* Positive z-index */
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+.haiku-left {
+  right: auto;
+  left: 5%;
+  top: auto;
+  bottom: -80px;
+}
+.haiku-trans {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  margin-right: 30px; /* spacing in vertical mode */
+  opacity: 0.8;
+}
+
+/* 3. Hanko Stamp Enders */
+.hanko-ender {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 38px; /* Taller for two characters */
+  border: 2px solid #c0392b;
+  border-radius: 4px;
+  color: #c0392b;
+  font-family: 'Noto Serif JP', serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.1;
+  margin-top: 15px;
+  opacity: 0.7;
+  transform: rotate(-4deg); /* Imperfect stamping */
+  transition: all 0.3s ease;
+}
+.exp-item:hover .hanko-ender {
+  opacity: 1;
+  transform: rotate(0deg) scale(1.1);
+}
+
+/* --- SPRINT 1-4: MOBILE RESPONSIVENESS (iPhone 12 Pro / max-width: 768px) --- */
+@media (max-width: 768px) {
+  /* Sprint 1: Foundation (Navbar & Hamburger) */
+  .navbar {
+    flex-direction: row;
+    padding: 15px 5%;
+    background-color: var(--bg-paper); /* Solid background */
+    color: var(--text-dark);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    align-items: center;
+    /* Hide on mobile initially (landing page) */
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-100%);
+    transition: all 0.4s ease;
+  }
+  .navbar.scrolled {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+    background-color: var(--bg-paper); /* Solid to prevent text bleed */
+  }
+  .hamburger {
+    display: flex; /* Show on mobile */
+  }
+  .nav-logo {
+    margin-bottom: 0;
+  }
+  
+  /* Full screen overlay for mobile menu */
+  .nav-right {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: var(--bg-paper);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    z-index: 100;
+  }
+  .nav-right.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .nav-links {
+    margin-bottom: 0;
+  }
+  .nav-item {
+    margin-right: 0;
+    font-size: 1.5rem; /* Larger for tapping */
+    margin-bottom: 20px;
+    display: block;
+    text-align: center;
+  }
+  .lang-switch {
+    gap: 20px;
+  }
+  
+  /* Hamburger Animation */
+  .hamburger.active span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .hamburger.active span:nth-child(2) {
+    opacity: 0;
+  }
+  .hamburger.active span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+  
+  /* Shift hero background to hide the belly */
+  .hero-bg-wrapper {
+    transform: scale(1.2) translateY(5%); /* Zoom in and shift down to crop bottom */
+  }
+
+  .hero-title-container {
+    top: 50%; /* Center it perfectly */
+    width: 90%; /* Prevent horizontal overflow */
+    z-index: 20; /* Ensure it stays above background but below menu */
+  }
+  .hero-title {
+    font-size: clamp(3rem, 18vw, 5rem);
+    margin-bottom: 10px;
+    writing-mode: horizontal-tb; /* Switch to horizontal on mobile to fit screen */
+    text-orientation: mixed;
+    line-height: 1.1;
+    text-align: center;
+  }
+  .hero-subtitle {
+    font-size: 1rem;
+    margin-bottom: 30px; /* Space for hanko */
+  }
+  .hero-calligraphy {
+    font-size: 20vw;
+    opacity: 0.15; /* slightly darker to make title pop */
+  }
+  .hero-hanko {
+    bottom: 20px;
+    right: 20px;
+  }
+
+  /* Sprint 2: Core Layout (Vertical Stacking) */
+  .item, .item.item_reverse {
+    flex-direction: column;
+    padding: 80px 5% 40px 5%; /* Extra padding top to prevent navbar overlap */
+    box-sizing: border-box; /* PREVENT HORIZONTAL OVERFLOW */
+    scroll-margin-top: 80px; /* Fix anchor link scrolling under navbar */
+  }
+  #about {
+    padding-top: 100px;
+  }
+  
+  .item_photo {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 0 40px 0;
+  }
+  .item_photo_cloth {
+    left: auto !important;
+    right: auto !important;
+  }
+  .item_text {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 !important;
+    flex-direction: column;
+    align-items: flex-start;
+    box-sizing: border-box;
+  }
+  
+  /* Sprint 3: Japanese Aesthetics for Mobile */
+  .section-title {
+    writing-mode: horizontal-tb;
+    border-right: none;
+    border-bottom: 1px solid var(--accent-red);
+    padding-right: 0;
+    padding-bottom: 10px;
+    margin-right: 0;
+    margin-bottom: 25px;
+    width: 100%;
+    text-align: left;
+    display: flex; /* Prevent inline overlap */
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+  }
+  .ja-title {
+    margin-top: 0; /* Reset desktop margin */
+    display: inline-block;
+  }
+  .desc {
+    padding-top: 0;
+  }
+  .floating-haiku {
+    font-size: 2rem;
+    right: 5%;
+    bottom: -30px;
+    letter-spacing: 0.3em;
+  }
+  .haiku-left {
+    left: 5%;
+    bottom: -30px;
+  }
+
+  /* Sprint 4: Polish & Touch Interactions */
+  .lang-btn {
+    padding: 8px 12px; /* Increase touch target */
+  }
+  .job-title {
+    font-size: 1.1rem;
+    line-height: 1.4;
+  }
+  .job-date {
+    font-size: 0.85rem;
+  }
+  p {
+    font-size: 1rem;
+  }
+  .hanko-ender {
+    margin-top: 25px; /* More breathing room */
+    width: 20px;
+    height: 32px;
+    font-size: 0.75rem;
+  }
+  
+  /* Reset center alignments for reverse layouts on mobile */
+  .item.item_reverse .item_text {
+    justify-content: flex-start;
+  }
+}
