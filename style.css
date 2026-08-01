@@ -11,6 +11,7 @@ html, body {
   padding: 0;
   width: 100%;
   overflow-x: clip; /* Clip instead of hidden prevents iOS touch swallowing */
+  touch-action: pan-y; /* Force browser to only care about vertical swipes, ignoring slight diagonal movements */
   background-color: #fcfbf8; /* Warm Washi Paper Tone */
   color: var(--text-dark);
   font-family: var(--font-serif);
@@ -26,7 +27,6 @@ h1, h2, h3, h4, h5, p {
 }
 
 main {
-  overflow-x: hidden; /* Move overflow hidden here to prevent iOS scroll bugs */
   width: 100%;
 }
 
