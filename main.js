@@ -92,16 +92,19 @@ window.toggleAudio = function() {
     btn.textContent = zenAudioEnabled ? "🔊 ZEN" : "🔇 ZEN";
     btn.classList.toggle('active', zenAudioEnabled);
   }
+  if (zenAudioEnabled) {
+    playKotoPluck(600); // Play an initial sound so the user knows it's working
+  }
 }
 
-function playKotoPluck() {
+function playKotoPluck(baseFreq = 440) {
   if (!zenAudioEnabled || !audioCtx) return;
   const osc = audioCtx.createOscillator();
   const gainNode = audioCtx.createGain();
   
   osc.type = 'sine';
-  osc.frequency.setValueAtTime(440 + Math.random()*20, audioCtx.currentTime); // Slight randomization
-  osc.frequency.exponentialRampToValueAtTime(220, audioCtx.currentTime + 0.5);
+  osc.frequency.setValueAtTime(baseFreq + Math.random()*20, audioCtx.currentTime); // Slight randomization
+  osc.frequency.exponentialRampToValueAtTime(baseFreq/2, audioCtx.currentTime + 0.5);
   
   gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
   gainNode.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.01);
@@ -120,18 +123,38 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// 3. Parallax effect and Red Thread Scrollbar
+// 3. Parallax effect, Red Thread Scrollbar, and Scroll Audio
+let lastPluckTime = 0;
+
+window.addEventListener('scroll', () => {
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const docHeight = document.body.scrollHeight - window.innerHeight;
+  const progress = docHeight > 0 ? (scrollTop / docHeight) : 0;
+  
+  // Red Thread
+  const thread = document.getElementById('red-thread');
+  if(thread) {
+    thread.style.height = `${progress * 100}%`;
+  }
+
+  // Audio on scroll (Throttled)
+  if (zenAudioEnabled) {
+    const now = Date.now();
+    if (now - lastPluckTime > 500) {
+      // Vary pitch slightly based on scroll depth
+      playKotoPluck(300 + (1 - progress) * 300);
+      lastPluckTime = now;
+    }
+  }
+}, { passive: true });
+
+// Desktop-only Lenis parallax
 if (lenis) {
   lenis.on('scroll', (e) => {
     const scrolled = e.animatedScroll;
     const heroImage = document.querySelector('.hero-image');
     if(heroImage) {
       heroImage.style.transform = `translateY(${scrolled * 0.1}px)`;
-    }
-    
-    const thread = document.getElementById('red-thread');
-    if(thread && e.progress !== undefined) {
-      thread.style.height = `${e.progress * 100}%`;
     }
   });
 }
