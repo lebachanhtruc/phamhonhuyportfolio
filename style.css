@@ -10,7 +10,6 @@ html, body {
   margin: 0;
   padding: 0;
   width: 100%;
-  overflow-x: hidden;
   scroll-behavior: smooth; /* Native smooth scroll for mobile anchor links */
   background-color: #fcfbf8; /* Warm Washi Paper Tone */
   color: var(--text-dark);
@@ -24,6 +23,11 @@ html, body {
 h1, h2, h3, h4, h5, p {
   margin: 0;
   font-weight: normal;
+}
+
+main {
+  overflow-x: hidden; /* Move overflow hidden here to prevent iOS scroll bugs */
+  width: 100%;
 }
 
 /* Navbar */
