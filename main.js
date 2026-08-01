@@ -1,6 +1,9 @@
+// Touch Device Detection
+const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (window.matchMedia("(pointer: coarse)").matches);
+
 // Initialize Lenis for smooth scrolling (via CDN global) ONLY ON DESKTOP
 let lenis = null;
-if (window.innerWidth > 768) {
+if (!isTouchDevice && window.innerWidth > 768) {
   try {
     lenis = new Lenis({
       duration: 1.2,
@@ -24,23 +27,33 @@ if (window.innerWidth > 768) {
   }
 }
 
-// Custom Cursor Logic
+// Custom Cursor Logic (Desktop Only)
 const cursorDot = document.querySelector('.cursor-dot');
 const cursorOutline = document.querySelector('.cursor-outline');
 
-window.addEventListener('mousemove', (e) => {
-  const posX = e.clientX;
-  const posY = e.clientY;
+if (!isTouchDevice) {
+  window.addEventListener('mousemove', (e) => {
+    const posX = e.clientX;
+    const posY = e.clientY;
 
-  cursorDot.style.left = `${posX}px`;
-  cursorDot.style.top = `${posY}px`;
-  
-  // Slight delay for the outline for a fluid effect
-  cursorOutline.animate({
-    left: `${posX}px`,
-    top: `${posY}px`
-  }, { duration: 500, fill: "forwards" });
-});
+    if (cursorDot) {
+      cursorDot.style.left = `${posX}px`;
+      cursorDot.style.top = `${posY}px`;
+    }
+    
+    // Slight delay for the outline for a fluid effect
+    if (cursorOutline) {
+      cursorOutline.animate({
+        left: `${posX}px`,
+        top: `${posY}px`
+      }, { duration: 500, fill: "forwards" });
+    }
+  });
+} else {
+  // Hide completely on mobile
+  if (cursorDot) cursorDot.style.display = 'none';
+  if (cursorOutline) cursorOutline.style.display = 'none';
+}
 
 // Intersection Observer for Reveal Animations
 const observerOptions = {
