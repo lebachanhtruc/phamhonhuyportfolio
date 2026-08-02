@@ -72,6 +72,7 @@ main {
   border: none;
   outline: none;
   -webkit-tap-highlight-color: transparent;
+  box-sizing: content-box; /* Reset button default border-box */
 }
 .hamburger span {
   width: 100%;
