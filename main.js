@@ -248,11 +248,45 @@ window.setLanguage = function(lang) {
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.classList.remove('active');
   });
-  document.getElementById(`btn-${lang}`).classList.add('active');
+  const activeBtn = document.getElementById(`btn-${lang}`);
+  if (activeBtn) activeBtn.classList.add('active');
+  else {
+    // Fallback for cached HTML without IDs
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      if (btn.getAttribute('data-lang') === lang || btn.textContent.toLowerCase().includes(lang.substring(0, 2))) {
+        btn.classList.add('active');
+      }
+    });
+  }
   
   // Set html lang attribute
   document.documentElement.lang = lang;
 }
+
+// Fallback event listeners for cached HTML versions
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    // Only attach if it doesn't already have an inline onclick to prevent double-firing (though harmless)
+    if (!btn.hasAttribute('onclick')) {
+      btn.addEventListener('click', (e) => {
+        let lang = 'en';
+        if (btn.textContent.includes('FR')) lang = 'fr';
+        if (btn.textContent.includes('JP')) lang = 'ja';
+        if (btn.getAttribute('data-lang')) lang = btn.getAttribute('data-lang');
+        
+        window.setLanguage(lang);
+        
+        // Also close menu on mobile
+        const navRight = document.querySelector('.nav-right');
+        const hamburger = document.querySelector('.hamburger');
+        if (navRight && hamburger) {
+          navRight.classList.remove('active');
+          hamburger.classList.remove('active');
+        }
+      });
+    }
+  });
+});
 
 // Mobile Hamburger Menu Logic
 const navRight = document.querySelector('.nav-right');
