@@ -255,22 +255,10 @@ window.setLanguage = function(lang) {
 }
 
 // Mobile Hamburger Menu Logic
-const hamburger = document.querySelector('.hamburger');
 const navRight = document.querySelector('.nav-right');
+const hamburger = document.querySelector('.hamburger');
 
 if (hamburger && navRight) {
-  const toggleMenu = (e) => {
-    if (e) {
-      e.stopPropagation();
-      e.preventDefault();
-    }
-    navRight.classList.toggle('active');
-    hamburger.classList.toggle('active');
-  };
-
-  hamburger.addEventListener('click', toggleMenu);
-  hamburger.addEventListener('touchstart', toggleMenu, {passive: false});
-
   // Close menu when clicking a nav link
   document.querySelectorAll('.nav-right .nav-item').forEach(link => {
     link.addEventListener('click', () => {

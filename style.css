@@ -68,6 +68,10 @@ main {
   z-index: 101;
   padding: 15px; /* increase hit area */
   margin: -15px; /* offset padding */
+  background: transparent;
+  border: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
 }
 .hamburger span {
   width: 100%;

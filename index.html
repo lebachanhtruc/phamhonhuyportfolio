@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Eve Pham - Portfolio</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@200;300;400;500&family=Noto+Serif+JP:wght@200;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./style.css?v=24">
+    <link rel="stylesheet" href="./style.css?v=25">
   </head>
   <body>
     <!-- Noren Loader -->
@@ -26,11 +26,11 @@
       <div class="nav-left">
         <a href="#home" class="nav-item nav-logo">EVE PHAM</a>
       </div>
-      <div class="hamburger">
+      <button class="hamburger" onclick="this.classList.toggle('active'); document.querySelector('.nav-right').classList.toggle('active'); event.stopPropagation();">
         <span></span>
         <span></span>
         <span></span>
-      </div>
+      </button>
       <div class="nav-right">
         <a href="#about" class="nav-item" data-i18n="nav_about">PROFILE</a>
         <a href="#experience" class="nav-item" data-i18n="nav_experience">EXPERIENCE</a>
@@ -148,7 +148,7 @@
     </main>
 
     <script src="https://unpkg.com/lenis@1.1.5/dist/lenis.min.js"></script>
-    <script src="./main.js?v=23"></script>
+    <script src="./main.js?v=25"></script>
     <script>
       // Automatically switch to English on load
       document.addEventListener("DOMContentLoaded", () => {
