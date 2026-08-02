@@ -543,21 +543,18 @@ body.loaded .noren-right { transform: translateX(100%); }
   /* Sprint 1: Foundation (Navbar & Hamburger) */
   .navbar {
     flex-direction: row;
-    padding: 15px 5%;
-    background-color: var(--bg-paper); /* Solid background */
-    color: var(--text-dark);
-    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    align-items: center;
-    /* Hide on mobile initially (landing page) */
+    position: fixed;
+    width: 100%;
+    padding: 15px 20px;
     opacity: 0;
     pointer-events: none;
-    transform: translateY(-100%);
+    top: -100px; /* Animate top instead of transform */
     transition: all 0.4s ease;
   }
   .navbar.scrolled {
     opacity: 1;
     pointer-events: auto;
-    transform: translateY(0);
+    top: 0;
     background-color: var(--bg-paper); /* Solid to prevent text bleed */
   }
   .hamburger {
