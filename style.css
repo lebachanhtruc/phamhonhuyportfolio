@@ -726,6 +726,7 @@ body.loaded .noren-right { transform: translateX(100%); }
   /* Sprint 4: Polish & Touch Interactions */
   .lang-btn {
     padding: 8px 12px; /* Increase touch target */
+    font-size: 1.5rem; /* Larger font size for better readability on mobile */
   }
   .job-title {
     font-size: 1.1rem;
