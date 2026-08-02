@@ -32,13 +32,13 @@
         <span></span>
       </button>
       <div class="nav-right">
-        <a href="#about" class="nav-item" data-i18n="nav_about">PROFILE</a>
-        <a href="#experience" class="nav-item" data-i18n="nav_experience">EXPERIENCE</a>
-        <a href="#education" class="nav-item" data-i18n="nav_education">EDUCATION</a>
+        <a href="#about" class="nav-item" data-i18n="nav_about" onclick="closeMenu()">PROFILE</a>
+        <a href="#experience" class="nav-item" data-i18n="nav_experience" onclick="closeMenu()">EXPERIENCE</a>
+        <a href="#education" class="nav-item" data-i18n="nav_education" onclick="closeMenu()">EDUCATION</a>
         <div class="lang-switcher">
-          <button id="btn-en" class="lang-btn active" onclick="setLanguage('en')">EN</button>
-          <button id="btn-fr" class="lang-btn" onclick="setLanguage('fr')">FR</button>
-          <button id="btn-ja" class="lang-btn" onclick="setLanguage('ja')">JP</button>
+          <button id="btn-en" class="lang-btn active" onclick="setLanguage('en'); closeMenu()">EN</button>
+          <button id="btn-fr" class="lang-btn" onclick="setLanguage('fr'); closeMenu()">FR</button>
+          <button id="btn-ja" class="lang-btn" onclick="setLanguage('ja'); closeMenu()">JP</button>
         </div>
       </div>
     </nav>
@@ -148,8 +148,18 @@
     </main>
 
     <script src="https://unpkg.com/lenis@1.1.5/dist/lenis.min.js"></script>
-    <script src="./main.js?v=28"></script>
+    <script src="./main.js?v=29"></script>
     <script>
+      // Global function to ensure menu closes reliably on all devices
+      function closeMenu() {
+        const navRight = document.querySelector('.nav-right');
+        const hamburger = document.querySelector('.hamburger');
+        if (navRight && hamburger) {
+          navRight.classList.remove('active');
+          hamburger.classList.remove('active');
+        }
+      }
+
       // Automatically switch to English on load
       document.addEventListener("DOMContentLoaded", () => {
         setLanguage('en');

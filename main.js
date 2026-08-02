@@ -257,15 +257,3 @@ window.setLanguage = function(lang) {
 // Mobile Hamburger Menu Logic
 const navRight = document.querySelector('.nav-right');
 const hamburger = document.querySelector('.hamburger');
-
-if (hamburger && navRight) {
-  // Close menu when clicking a nav link or language button
-  document.querySelectorAll('.nav-right .nav-item, .nav-right .lang-btn').forEach(link => {
-    link.addEventListener('click', () => {
-      if (navRight.classList.contains('active')) {
-        navRight.classList.remove('active');
-        hamburger.classList.remove('active');
-      }
-    });
-  });
-}
